@@ -6,8 +6,6 @@ const getAllBattedBallData = async (req, res) => {
   return res.json({mssg: "GET all batted ball data route test"})
 }
 
- // Validate each batting practice entry in the array
- // Create multiple batting practices from CSV upload
 const createBattedBallData = async (req, res) => {
  return res.json({mssg: "POST all batted ball data route test"})
 }

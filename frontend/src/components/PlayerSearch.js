@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Scatterplot from './Scatterplot';
 
 const PlayerSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -49,30 +50,8 @@ const PlayerSearch = () => {
                 />
                 <button type="submit">Search</button>
             </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error in red */}
-            {playerData.length > 0 && (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Player Name</th>
-                            <th>Exit Velocity</th>
-                            <th>Launch Angle</th>
-                            <th>Hit Distance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {playerData.map((player, index) => (
-                            <tr key={index}>
-                                <td>{player.batter}</td> 
-                                <td>{player.exitSpeed || 'N/A'}</td> 
-                                <td>{player.launchAngle || 'N/A'}</td> 
-                                <td>{player.hitDistance || 'N/A'}</td> 
-
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-               )}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {playerData.length > 0 && <Scatterplot data={playerData} />}
         </div>
     );
 };

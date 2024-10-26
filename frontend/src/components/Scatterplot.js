@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Scatter } from 'react-chartjs-2';
 import { Chart, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import { Modal, Button } from 'react-bootstrap';
+import ColorLegend from './ColorLegend';
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend);
 
@@ -20,7 +21,7 @@ const ScatterPlot = ({ data }) => {
         Sacrifice: '#ccffcc', // Very light green
         Single: 'lightgreen',
         Triple: 'darkgreen',
-        Undefined: 'grey',
+        'Out of Play': 'grey',
     };
 
     const scatterData = {
@@ -62,7 +63,6 @@ const ScatterPlot = ({ data }) => {
         },
         onClick: (event, elements) => {
             if (elements.length > 0) {
-                // Get the index of the clicked element
                 const index = elements[0].index;
                 const clickedData = scatterData.datasets[0].data[index];
                 setSelectedData(clickedData);
@@ -103,6 +103,9 @@ const ScatterPlot = ({ data }) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+            {/* Render the ColorLegend component */}
+            <ColorLegend colorMap={colorMap} />
         </div>
     );
 };

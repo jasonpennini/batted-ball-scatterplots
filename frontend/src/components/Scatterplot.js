@@ -1,11 +1,15 @@
 // ScatterPlot.js
-import React from 'react';
+import React, { useState } from 'react';
 import { Scatter } from 'react-chartjs-2';
 import { Chart, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
+import { Modal, Button } from 'react-bootstrap';
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend);
 
 const ScatterPlot = ({ data }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [selectedData, setSelectedData] = useState(null);
+
     // Define the color map for each PLAY_OUTCOME
     const colorMap = {
         Double: 'green',
@@ -19,7 +23,6 @@ const ScatterPlot = ({ data }) => {
         Undefined: 'grey',
     };
 
-    // Transform data to include color based on playOutcome
     const scatterData = {
         datasets: [
             {
@@ -27,7 +30,12 @@ const ScatterPlot = ({ data }) => {
                 data: data.map(player => ({
                     x: player.exitSpeed || 0,
                     y: player.launchAngle || 0,
-                    backgroundColor: colorMap[player.playOutcome] || 'grey', // Default to grey if outcome not found
+                    playOutcome: player.playOutcome,
+                    hitDistance: player.hitDistance,
+                    videoLink: player.videoLink,
+                    pitcher: player.pitcher,
+                    exitSpeed: player.exitSpeed,
+                    launchAngle: player.launchAngle,
                 })),
                 pointBackgroundColor: data.map(player => colorMap[player.playOutcome] || 'grey'),
                 pointRadius: 5,
@@ -52,9 +60,51 @@ const ScatterPlot = ({ data }) => {
                 },
             },
         },
+        onClick: (event, elements) => {
+            if (elements.length > 0) {
+                // Get the index of the clicked element
+                const index = elements[0].index;
+                const clickedData = scatterData.datasets[0].data[index];
+                setSelectedData(clickedData);
+                setShowModal(true);
+            }
+        },
     };
 
-    return <Scatter data={scatterData} options={options} />;
+    return (
+        <div>
+            <Scatter data={scatterData} options={options} />
+
+            {/* Modal for displaying point details */}
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Play Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {selectedData && (
+                        <div>
+                            <p><strong>Play Outcome:</strong> {selectedData.playOutcome}</p>
+                            <p><strong>Pitcher:</strong> {selectedData.pitcher}</p>
+                            <p><strong>Exit Speed:</strong> {selectedData.exitSpeed}</p>
+                            <p><strong>Launch Angle:</strong> {selectedData.launchAngle}</p>
+                            <p><strong>Hit Distance:</strong> {selectedData.hitDistance}</p>
+                            <p>
+                                <strong>Video Link:</strong>{' '}
+                                <a href={selectedData.videoLink} target="_blank" rel="noopener noreferrer">
+                                    Watch Video
+                                </a>
+                            </p>
+                        </div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    );
 };
 
 export default ScatterPlot;

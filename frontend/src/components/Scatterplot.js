@@ -6,6 +6,20 @@ import { Chart, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 Chart.register(LinearScale, PointElement, Tooltip, Legend);
 
 const ScatterPlot = ({ data }) => {
+    // Define the color map for each PLAY_OUTCOME
+    const colorMap = {
+        Double: 'green',
+        Error: 'black',
+        FieldersChoice: 'darkgrey',
+        HomeRun: 'darkgreen',
+        Out: 'red',
+        Sacrifice: '#ccffcc', // Very light green
+        Single: 'lightgreen',
+        Triple: 'darkgreen',
+        Undefined: 'grey',
+    };
+
+    // Transform data to include color based on playOutcome
     const scatterData = {
         datasets: [
             {
@@ -13,8 +27,9 @@ const ScatterPlot = ({ data }) => {
                 data: data.map(player => ({
                     x: player.exitSpeed || 0,
                     y: player.launchAngle || 0,
+                    backgroundColor: colorMap[player.playOutcome] || 'grey', // Default to grey if outcome not found
                 })),
-                backgroundColor: 'rgba(75,192,192,1)',
+                pointBackgroundColor: data.map(player => colorMap[player.playOutcome] || 'grey'),
                 pointRadius: 5,
             },
         ],

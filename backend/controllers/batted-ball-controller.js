@@ -24,7 +24,8 @@ const getBatterData = async (req, res) => {
       if (!hitterData.length) {
          return res.status(404).send('Hitter not found');
         }
-      res.json(hitterData);
+      console.log(hitterData)
+      return res.json(hitterData);
   } catch (error) {
       res.status(500).send('Error fetching hitter data: ' + error.message);
   }

@@ -50,6 +50,7 @@ const PlayerSearch = () => {
                 />
                 <button type="submit">Search</button>
             </form>
+            <br></br>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {playerData.length > 0 && <Scatterplot data={playerData} />}
         </div>

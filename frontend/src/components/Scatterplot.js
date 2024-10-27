@@ -72,8 +72,16 @@ const ScatterPlot = ({ data }) => {
     };
 
     return (
-        <div>
-            <Scatter data={scatterData} options={options} />
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+            {/* Wrap Scatter component in a div with a black outline */}
+            <div style={{ flexGrow: 1, border: '1px solid black', padding: '10px', borderRadius: '5px' }}>
+                <Scatter data={scatterData} options={options} />
+            </div>
+
+            {/* Render the ColorLegend component with a black outline */}
+            <div style={{ marginLeft: '20px', border: '1px solid black', padding: '10px', borderRadius: '5px' }}>
+                <ColorLegend colorMap={colorMap} />
+            </div>
 
             {/* Modal for displaying point details */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
@@ -103,9 +111,6 @@ const ScatterPlot = ({ data }) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-            {/* Render the ColorLegend component */}
-            <ColorLegend colorMap={colorMap} />
         </div>
     );
 };

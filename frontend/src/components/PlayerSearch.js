@@ -8,7 +8,6 @@ const PlayerSearch = () => {
     const [batterData, setBatterData] = useState([]);
     const [error, setError] = useState('');
 
-
     const handleInputChange = (event) => {
         setBatterName(event.target.value);
     };
@@ -41,16 +40,10 @@ const PlayerSearch = () => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input 
-                    type="text" 
-                    value={batterName} 
-                    onChange={handleInputChange} 
-                    placeholder="Enter Batter Name" 
-                    required
-                />
+                <input type="text" value={batterName} onChange={handleInputChange} placeholder="Enter Batter Name" required />
                 <button type="submit">Search</button>
             </form>
-            
+            <br></br>
             {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
             
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}

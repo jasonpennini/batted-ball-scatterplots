@@ -11,7 +11,7 @@ export const colorMap = {
   HomeRun: 'darkgreen',
 };
 
-export const transformDataToScatterFormat = (batterData) => ({
+export const getScatterData = (batterData) => ({
   datasets: [
     {
       label: 'Exit Speed vs. Launch Angle',

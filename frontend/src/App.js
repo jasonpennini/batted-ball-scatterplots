@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react'
 import Home from './pages/home'
 import Navbar from './components/Navbar'
 import db from './pouchDBConfig'; 
-import initialData from './data/output'; 
 
   const App = () => {
     const [data, setData] = useState([]);
@@ -12,7 +11,7 @@ import initialData from './data/output';
       try {
         const result = await db.allDocs({ include_docs: true });
         const fetchedData = result.rows.map((row) => {
-          const batterName = row.doc.BATTER.trim(); 
+          const batterName = row.doc.BATTER ? row.doc.BATTER.trim() : ''; 
           const nameParts = batterName.split(' ').filter(part => part); 
           const formattedName = nameParts.length > 1 ? `${nameParts[1]} ${nameParts[0]}` : batterName;
     
@@ -32,7 +31,7 @@ import initialData from './data/output';
       try {
         const result = await db.allDocs({ include_docs: true });
         const fetchedData = result.rows.map((row) => {
-          const batterName = row.doc.BATTER;
+          const batterName = row.doc.BATTER ? row.doc.BATTER.trim() : ''; 
           // Reformat the batter name from "First Last" to "Last, First"
           const nameParts = batterName.split(' ');
           const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName; 

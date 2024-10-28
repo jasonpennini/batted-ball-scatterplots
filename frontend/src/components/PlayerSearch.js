@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getBatterData, getUniqueBatters } from '../pouchDBHelpers';
-import ScatterPlot from './Scatterplot';
+import ScatterPlot from './ScatterPlot/Scatterplot';
 
 const PlayerSearch = () => {
     const [batterName, setBatterName] = useState('');

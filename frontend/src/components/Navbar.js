@@ -6,7 +6,7 @@ const Navbar = () => {
     <header>
       <div className='container'>
         <Link to='/'>
-          <h1>Batted Ball Graphs</h1>
+          <h1>2018 Batted Ball Graphs</h1>
         </Link>
       </div>
     </header>

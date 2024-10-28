@@ -1,58 +1,60 @@
+// PlayerSearch.js
 import React, { useState } from 'react';
-import Scatterplot from './Scatterplot';
+import { getBatterData } from '../pouchDBHelpers';
+import ScatterPlot from './Scatterplot';
 
 const PlayerSearch = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [playerData, setPlayerData] = useState([]);
-    const [error, setError] = useState(null);
+    const [batterName, setBatterName] = useState('');
+    const [batterData, setBatterData] = useState([]);
+    const [error, setError] = useState('');
 
-    const fetchPlayerData = async (e) => {
-        e.preventDefault(); 
-        setError(null);
-    
-        if (!searchTerm) {
-            setPlayerData([]);
-            setError('Please enter a player name.');
-            return;
-        }
+
+    const handleInputChange = (event) => {
+        setBatterName(event.target.value);
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Prevent the default form submission
+        setError(''); // Clear any previous errors
+
         try {
-            // Split the input and reformat to "Last, First"
-            const nameParts = searchTerm.split(' ');
-            if (nameParts.length < 2) {
-                setError('Please enter both first and last names.');
-                return;
-            }
-            const formattedName = `${nameParts[1]}, ${nameParts[0]}`; // "Last, First"
-            const encodedSearchTerm = encodeURIComponent(formattedName);
-            // Fetch from the correct endpoint
-            const response = await fetch(`/api/battedBallData/hitters/${encodedSearchTerm}`);
-    
-            if (!response.ok) {
-                throw new Error('Player not found');
-            }
-    
-            const data = await response.json();
-            setPlayerData(data); 
-        } catch (error) {
-            setError(error.message); 
-            setPlayerData([]); 
+            console.log('inside try');
+            console.log(batterName, "batterName");
+
+            // Reformat the batter name from "First Last" to "Last, First"
+            const nameParts = batterName.split(' ');
+            const formattedName = nameParts.length > 1 
+                ? `${nameParts[1]}, ${nameParts[0]}` // "Braun, Ryan"
+                : batterName; // Handle case where only a single name is provided
+
+            console.log(formattedName, "formattedName"); // Log the formatted name
+            
+            const data = await getBatterData(formattedName); // Use the formatted name
+            setBatterData(data);
+            console.log('batterData', data)
+        } catch (err) {
+            console.error("Error fetching batter data:", err);
+            setError(err.message); // Display the error message
         }
     };
-    
+
     return (
         <div>
-            <form onSubmit={fetchPlayerData}>
-                <input
-                    type="text"
-                    placeholder="Enter player name"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+            <form onSubmit={handleSubmit}>
+                <input 
+                    type="text" 
+                    value={batterName} 
+                    onChange={handleInputChange} 
+                    placeholder="Enter Batter Name" 
+                    required
                 />
                 <button type="submit">Search</button>
             </form>
-            <br></br>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {playerData.length > 0 && <Scatterplot data={playerData} />}
+            
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
+            
+            {batterData.length > 0 && <ScatterPlot batterData={batterData} />}
+
         </div>
     );
 };

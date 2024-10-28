@@ -1,5 +1,5 @@
-// ScatterPlot.js
-import React, { useState } from 'react';
+import React from 'react';
+import {useState} from 'react'
 import { Scatter } from 'react-chartjs-2';
 import { Chart, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import { Modal, Button } from 'react-bootstrap';
@@ -7,18 +7,17 @@ import ColorLegend from './ColorLegend';
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend);
 
-const ScatterPlot = ({ data }) => {
+const ScatterPlot = ({ batterData }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedData, setSelectedData] = useState(null);
-
-    // Define the color map for each PLAY_OUTCOME
+    
     const colorMap = {
         Double: 'green',
         Error: 'black',
         FieldersChoice: 'darkgrey',
         HomeRun: 'darkgreen',
         Out: 'red',
-        Sacrifice: '#ccffcc', // Very light green
+        Sacrifice: '#ccffcc',
         Single: 'lightgreen',
         Triple: 'darkgreen',
         'Out of Play': 'grey',
@@ -28,21 +27,21 @@ const ScatterPlot = ({ data }) => {
         datasets: [
             {
                 label: 'Exit Speed vs. Launch Angle',
-                data: data.map(player => ({
-                    x: player.exitSpeed || 0,
-                    y: player.launchAngle || 0,
-                    playOutcome: player.playOutcome,
-                    hitDistance: player.hitDistance,
-                    videoLink: player.videoLink,
-                    pitcher: player.pitcher,
-                    exitSpeed: player.exitSpeed,
-                    launchAngle: player.launchAngle,
+                data: batterData.map(player => ({
+                    x: player.EXIT_SPEED || 0,
+                    y: player.LAUNCH_ANGLE || 0,
+                    playOutcome: player.PLAY_OUTCOME,
+                    hitDistance: player.HIT_DISTANCE,
+                    videoLink: player.VIDEO_LINK,
+                    pitcher: player.PITCHER,
                 })),
-                pointBackgroundColor: data.map(player => colorMap[player.playOutcome] || 'grey'),
+                pointBackgroundColor: batterData.map(player => colorMap[player.PLAY_OUTCOME] || 'grey'),
                 pointRadius: 5,
             },
         ],
     };
+
+    console.log('Scatter Data:', scatterData);
 
     const options = {
         scales: {
@@ -73,17 +72,12 @@ const ScatterPlot = ({ data }) => {
 
     return (
         <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-            {/* Wrap Scatter component in a div with a black outline */}
             <div style={{ flexGrow: 1, border: '1px solid black', padding: '10px', borderRadius: '5px' }}>
                 <Scatter data={scatterData} options={options} />
             </div>
-
-            {/* Render the ColorLegend component with a black outline */}
             <div style={{ marginLeft: '20px', border: '1px solid black', padding: '10px', borderRadius: '5px' }}>
                 <ColorLegend colorMap={colorMap} />
             </div>
-
-            {/* Modal for displaying point details */}
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Play Details</Modal.Title>

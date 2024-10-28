@@ -97,14 +97,28 @@ const PlayerSearch = () => {
         }
     };
 
+    const handleBatterClick = async (batter) => {
+        // When a batter name is clicked, format the name and fetch data
+        const nameParts = batter.split(' ');
+        const formattedName = nameParts.length > 1 
+            ? `${nameParts[1]}, ${nameParts[0]}`
+            : batter;
+
+        try {
+            const data = await getBatterData(formattedName);
+            setBatterData(data);
+            setError(''); // Clear any previous error messages
+            setValue(''); // Optionally clear the search input
+            setFilteredBatters(batterNames); // Reset the filtered batters list
+            setFilteredBatters([]); // Clear the filtered batters to hide the dropdown
+        } catch (err) {
+            console.error("Error fetching batter data:", err);
+            setError(err.message); // Display the error message
+        }
+    };
+
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={batterName} onChange={handleInputChange} placeholder="Enter Batter Name" required />
-                <button type="submit">Search</button>
-            </form>
-            <br />
-
             <h1>Search</h1>
             <div className="search-container">
                 <div className="search-inner">
@@ -118,7 +132,7 @@ const PlayerSearch = () => {
                 </div>
                 <div className="dropdown">
                     {filteredBatters.map((item, index) => (
-                        <div key={index} className="dropdown-row">{item}</div>
+                        <div key={index} className="dropdown-row" onClick={() => handleBatterClick(item)}>{item}</div>
                     ))}
                 </div>
             </div>

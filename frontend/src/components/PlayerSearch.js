@@ -123,11 +123,11 @@ const PlayerSearch = () => {
     return (
         <div>
             <h1>Search</h1>
-            <h6>Search Bar Will Filter As You Type</h6>
+            <h6>Filter by first name</h6>
+
             <div className="search-container">
                 <div className="search-inner">
-                    <input type="text" value={value} onChange={onChange} placeholder="Search by name" onFocus={handleInputFocus}/>
-                    <button onClick={onSearch}>Search</button>
+                    <input type="text" value={value} onChange={onChange} placeholder="Find a player" onFocus={handleInputFocus}/>
                 </div>
                 <div className="dropdown">
                     {filteredBatters.map((item, index) => (

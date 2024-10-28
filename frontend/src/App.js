@@ -7,7 +7,6 @@ import initialData from './data/output';
 
   const App = () => {
     const [data, setData] = useState([]);
-    console.log(initialData)
     // Load initial data into PouchDB only if the database is empty
     const loadInitialData = async () => {
       try {
@@ -16,7 +15,6 @@ import initialData from './data/output';
           const batterName = row.doc.BATTER.trim(); 
           const nameParts = batterName.split(' ').filter(part => part); 
           const formattedName = nameParts.length > 1 ? `${nameParts[1]} ${nameParts[0]}` : batterName;
-          console.log(formattedName, "formattedName");
     
           return {
             ...row.doc,

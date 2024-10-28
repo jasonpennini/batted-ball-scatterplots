@@ -50,8 +50,6 @@ export const getUniqueBatters = async () => {
               })
       )
   ];
-    console.log(batters, "batters inside unique batters");
-    console.log("Unique batters count:", batters.length);
     // Sort batters alphabetically
     batters.sort((a, b) => a.localeCompare(b));
     return batters;
@@ -63,15 +61,11 @@ export const getUniqueBatters = async () => {
 
 // Get data for a specific batter
 export const getBatterData = async (hitterName) => {
-    console.log('getbatterdata invoked')
     try {
         const result = await db.find({
             selector: { BATTER: hitterName }
         });
 
-        console.log('Find result:', result); // Log the result
-        console.log('result.docs', result.docs)
-       
         if (result.docs.length === 0) {
             throw new Error('Hitter not found');
         }

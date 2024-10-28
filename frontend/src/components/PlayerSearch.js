@@ -15,7 +15,6 @@ const PlayerSearch = () => {
         const fetchUniqueBatters = async () => {
             try {
                 const batters = await getUniqueBatters(); 
-                console.log(batters, "batters");
                 setBatterNames(batters);
                 setFilteredBatters(batters); 
             } catch (error) {
@@ -47,18 +46,12 @@ const PlayerSearch = () => {
         setError(''); 
 
         try {
-            console.log('inside try');
-            console.log(batterName, "batterName");
 
             // Reformat the batter name from "First Last" to "Last, First"
             const nameParts = batterName.split(' ');
-            const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName; 
-
-            console.log(formattedName, "formattedName"); // Log the formatted name
-            
+            const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName;             
             const data = await getBatterData(formattedName); 
             setBatterData(data);
-            console.log('batterData', data);
         } catch (err) {
             console.error("Error fetching batter data:", err);
             setError(err.message); 
@@ -80,9 +73,7 @@ const PlayerSearch = () => {
             try {
                 // Reformat the batter name for getBatterData
                 const nameParts = selectedBatter.split(' ');
-                const formattedName = nameParts.length > 1 
-                    ? `${nameParts[1]}, ${nameParts[0]}`
-                    : selectedBatter;
+                const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : selectedBatter;
 
                 const data = await getBatterData(formattedName); 
                 setBatterData(data);

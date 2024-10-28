@@ -41,7 +41,6 @@ const ScatterPlot = ({ batterData }) => {
         ],
     };
 
-    console.log('Scatter Data:', scatterData);
 
     const options = {
         scales: {
@@ -64,7 +63,6 @@ const ScatterPlot = ({ batterData }) => {
             if (elements.length > 0) {
                 const index = elements[0].index;
                 const clickedData = scatterData.datasets[0].data[index];
-                console.log(clickedData, 'clickedData for modal')
                 setSelectedData(clickedData);
                 setShowModal(true);
             }

@@ -5,8 +5,6 @@ import Navbar from './components/Navbar'
 import db from './pouchDBConfig'; 
 import initialData from './data/output'; 
 
-
-  
   const App = () => {
     const [data, setData] = useState([]);
     console.log(initialData)
@@ -15,8 +13,8 @@ import initialData from './data/output';
       try {
         const result = await db.allDocs({ include_docs: true });
         const fetchedData = result.rows.map((row) => {
-          const batterName = row.doc.BATTER.trim(); // Trim any extra whitespace
-          const nameParts = batterName.split(' ').filter(part => part); // Split and remove empty parts
+          const batterName = row.doc.BATTER.trim(); 
+          const nameParts = batterName.split(' ').filter(part => part); 
           const formattedName = nameParts.length > 1 ? `${nameParts[1]} ${nameParts[0]}` : batterName;
           console.log(formattedName, "formattedName");
     
@@ -25,7 +23,7 @@ import initialData from './data/output';
             BATTER: formattedName,
           };
         });
-        setData(fetchedData); // Update state with transformed data
+        setData(fetchedData); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -39,8 +37,7 @@ import initialData from './data/output';
           const batterName = row.doc.BATTER;
           // Reformat the batter name from "First Last" to "Last, First"
           const nameParts = batterName.split(' ');
-          const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName; // Handle case where only a single name is provided
-          console.log(formattedName, "formattedName"); // Log the formatted name
+          const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName; 
     
           return {
             ...row.doc,

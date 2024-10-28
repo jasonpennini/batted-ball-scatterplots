@@ -52,6 +52,8 @@ export const getUniqueBatters = async () => {
   ];
     console.log(batters, "batters inside unique batters");
     console.log("Unique batters count:", batters.length);
+    // Sort batters alphabetically
+    batters.sort((a, b) => a.localeCompare(b));
     return batters;
 } catch (error) {
     console.error("Error fetching unique batters:", error);

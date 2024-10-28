@@ -49,3 +49,12 @@ header a {
 .nav-item {
   margin-left: 10px; 
 }
+.dropdown {
+  max-width: 200px; 
+  overflow: hidden;  
+}
+
+.dropdown-row {
+  cursor: pointer;      
+}
+

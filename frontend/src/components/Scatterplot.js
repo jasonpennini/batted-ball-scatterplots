@@ -64,6 +64,7 @@ const ScatterPlot = ({ batterData }) => {
             if (elements.length > 0) {
                 const index = elements[0].index;
                 const clickedData = scatterData.datasets[0].data[index];
+                console.log(clickedData, 'clickedData for modal')
                 setSelectedData(clickedData);
                 setShowModal(true);
             }
@@ -87,8 +88,8 @@ const ScatterPlot = ({ batterData }) => {
                         <div>
                             <p><strong>Play Outcome:</strong> {selectedData.playOutcome}</p>
                             <p><strong>Pitcher:</strong> {selectedData.pitcher}</p>
-                            <p><strong>Exit Speed:</strong> {selectedData.exitSpeed}</p>
-                            <p><strong>Launch Angle:</strong> {selectedData.launchAngle}</p>
+                            <p><strong>Exit Speed:</strong> {selectedData.x}</p>
+                            <p><strong>Launch Angle:</strong> {selectedData.y}</p>
                             <p><strong>Hit Distance:</strong> {selectedData.hitDistance}</p>
                             <p>
                                 <strong>Video Link:</strong>{' '}

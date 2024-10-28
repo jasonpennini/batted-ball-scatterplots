@@ -20,7 +20,7 @@ const ColorLegend = ({ colorMap }) => {
                                 padding: '8px',
                                 borderBottom: '1px solid #ddd',
                                 backgroundColor: colorMap[outcome],
-                                color: outcome === 'Error' ? 'white' : 'black' // For readability on dark colors
+                                color: outcome === 'Error' ? 'white' : 'black' 
                             }}>
                             </td>
                         </tr>

@@ -8,15 +8,16 @@ const PlayerSearch = () => {
     const [error, setError] = useState('');
     const [value, setValue] = useState(''); // Search term input by user
     const [batterNames, setBatterNames] = useState([]);
-    const [filteredBatters, setFilteredBatters] = useState([]); // Filtered batters
+    const [filteredBatters, setFilteredBatters] = useState([]); 
+    const [hoveredIndex, setHoveredIndex] = useState(null); 
 
     useEffect(() => {
         const fetchUniqueBatters = async () => {
             try {
-                const batters = await getUniqueBatters(); // Fetch unique batters
+                const batters = await getUniqueBatters(); 
                 console.log(batters, "batters");
                 setBatterNames(batters);
-                setFilteredBatters(batters); // Initialize with full list of batters
+                setFilteredBatters(batters); 
             } catch (error) {
                 console.error("Error fetching unique batters:", error);
                 setError(error.message);
@@ -34,7 +35,7 @@ const PlayerSearch = () => {
         const filtered = batterNames.filter((name) =>
             name.toLowerCase().startsWith(input.toLowerCase())
         );
-        setFilteredBatters(filtered); // Update the filtered batters
+        setFilteredBatters(filtered); 
     };
 
     const handleInputChange = (event) => {
@@ -43,7 +44,7 @@ const PlayerSearch = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setError(''); // Clear any previous errors
+        setError(''); 
 
         try {
             console.log('inside try');
@@ -51,18 +52,16 @@ const PlayerSearch = () => {
 
             // Reformat the batter name from "First Last" to "Last, First"
             const nameParts = batterName.split(' ');
-            const formattedName = nameParts.length > 1 
-                ? `${nameParts[1]}, ${nameParts[0]}` // "Braun, Ryan"
-                : batterName; // Handle case where only a single name is provided
+            const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName; 
 
             console.log(formattedName, "formattedName"); // Log the formatted name
             
-            const data = await getBatterData(formattedName); // Use the formatted name
+            const data = await getBatterData(formattedName); 
             setBatterData(data);
             console.log('batterData', data);
         } catch (err) {
             console.error("Error fetching batter data:", err);
-            setError(err.message); // Display the error message
+            setError(err.message); 
         }
     };
 
@@ -85,12 +84,12 @@ const PlayerSearch = () => {
                     ? `${nameParts[1]}, ${nameParts[0]}`
                     : selectedBatter;
 
-                const data = await getBatterData(formattedName); // Call getBatterData with selected batter name
+                const data = await getBatterData(formattedName); 
                 setBatterData(data);
-                setError(''); // Clear any previous error messages
+                setError(''); 
             } catch (err) {
                 console.error("Error fetching batter data:", err);
-                setError(err.message); // Display the error message
+                setError(err.message); 
             }
         } else {
             setError('Batter not found.');
@@ -107,32 +106,53 @@ const PlayerSearch = () => {
         try {
             const data = await getBatterData(formattedName);
             setBatterData(data);
-            setError(''); // Clear any previous error messages
-            setValue(''); // Optionally clear the search input
-            setFilteredBatters(batterNames); // Reset the filtered batters list
-            setFilteredBatters([]); // Clear the filtered batters to hide the dropdown
+            setError(''); 
+            setValue(''); 
+            setFilteredBatters(batterNames); 
+            setFilteredBatters([]); 
         } catch (err) {
             console.error("Error fetching batter data:", err);
-            setError(err.message); // Display the error message
+            setError(err.message); 
         }
+    };
+
+    const handleInputFocus = () => {
+        setFilteredBatters(batterNames); 
+        setBatterData([]); 
+    };
+
+    const handleMouseEnter = (index) => {
+        setHoveredIndex(index); 
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredIndex(null); 
     };
 
     return (
         <div>
             <h1>Search</h1>
+            <h6>Search Bar Will Filter As You Type</h6>
             <div className="search-container">
                 <div className="search-inner">
-                    <input
-                        type="text"
-                        value={value}
-                        onChange={onChange}
-                        placeholder="Search by name"
-                    />
+                    <input type="text" value={value} onChange={onChange} placeholder="Search by name" onFocus={handleInputFocus}/>
                     <button onClick={onSearch}>Search</button>
                 </div>
                 <div className="dropdown">
                     {filteredBatters.map((item, index) => (
-                        <div key={index} className="dropdown-row" onClick={() => handleBatterClick(item)}>{item}</div>
+                        <div
+                            key={index}
+                            className="dropdown-row"
+                            onClick={() => handleBatterClick(item)}
+                            onMouseEnter={() => handleMouseEnter(index)}
+                            onMouseLeave={handleMouseLeave}
+                            style={{
+                                backgroundColor: hoveredIndex === index ? '#e0e0e0' : 'transparent', 
+                                cursor: 'pointer' 
+                            }}
+                        >
+                            {item}
+                        </div>
                     ))}
                 </div>
             </div>

@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import db from './pouchDBConfig'; 
 import initialData from './data/output'; 
 
+
   
   const App = () => {
     const [data, setData] = useState([]);
@@ -13,24 +14,43 @@ import initialData from './data/output';
     const loadInitialData = async () => {
       try {
         const result = await db.allDocs({ include_docs: true });
-        if (result.rows.length === 0) { // Checks if PouchDB is empty
-          const docs = initialData.map((item, index) => ({
-            ...item,
-            _id: `row_${index}`, // Generate a unique ID based on the index
-          }));
-          await db.bulkDocs(docs);
-          console.log('Initial data loaded into PouchDB');
-        }
+        const fetchedData = result.rows.map((row) => {
+          const batterName = row.doc.BATTER.trim(); // Trim any extra whitespace
+          const nameParts = batterName.split(' ').filter(part => part); // Split and remove empty parts
+          const formattedName = nameParts.length > 1 ? `${nameParts[1]} ${nameParts[0]}` : batterName;
+          console.log(formattedName, "formattedName");
+    
+          return {
+            ...row.doc,
+            BATTER: formattedName,
+          };
+        });
+        setData(fetchedData); // Update state with transformed data
       } catch (error) {
-        console.error('Error loading initial data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     // Fetch data from PouchDB to display in the app
     const fetchData = async () => {
-      const result = await db.allDocs({ include_docs: true });
-      const fetchedData = result.rows.map((row) => row.doc);
-      setData(fetchedData);
+      try {
+        const result = await db.allDocs({ include_docs: true });
+        const fetchedData = result.rows.map((row) => {
+          const batterName = row.doc.BATTER;
+          // Reformat the batter name from "First Last" to "Last, First"
+          const nameParts = batterName.split(' ');
+          const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName; // Handle case where only a single name is provided
+          console.log(formattedName, "formattedName"); // Log the formatted name
+    
+          return {
+            ...row.doc,
+            BATTER: formattedName
+          };
+        });
+        setData(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
   
     useEffect(() => {

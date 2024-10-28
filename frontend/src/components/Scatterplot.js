@@ -12,15 +12,15 @@ const ScatterPlot = ({ batterData }) => {
     const [selectedData, setSelectedData] = useState(null);
     
     const colorMap = {
-        Double: 'green',
+        Out: 'red',
         Error: 'black',
         FieldersChoice: 'darkgrey',
-        HomeRun: 'darkgreen',
-        Out: 'red',
+        'Out of Play': 'grey',
         Sacrifice: '#ccffcc',
         Single: 'lightgreen',
+        Double: 'green',
         Triple: 'darkgreen',
-        'Out of Play': 'grey',
+        HomeRun: 'darkgreen',
     };
 
     const scatterData = {

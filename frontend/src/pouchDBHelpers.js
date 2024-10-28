@@ -18,14 +18,45 @@ export const getAllBattedBallData = async () => {
 
 // Get unique batters
 export const getUniqueBatters = async () => {
-    try {
-        const allData = await db.find({ selector: {} });
-        const batters = [...new Set(allData.docs.map(doc => doc.batter))];
-        return batters;
-    } catch (error) {
-        console.error("Error fetching unique batters:", error);
-        throw error;
+  try {
+    let allDocs = [];
+    let skip = 0;
+    const batchSize = 500; // Adjust this value based on performance needs
+
+    // Loop until no more results
+    while (true) {
+        const result = await db.find({ 
+            selector: {}, 
+            limit: batchSize, 
+            skip: skip 
+        });
+        
+        allDocs = allDocs.concat(result.docs);
+        if (result.docs.length < batchSize) break; // Exit if last batch is smaller than requested size
+        
+        skip += batchSize;
     }
+
+    // Get unique batters
+    const batters = [
+      ...new Set(
+          allDocs
+              .map(doc => doc.BATTER)
+              .filter(Boolean)
+              .map(name => {
+                  // Format "LASTNAME, FIRSTNAME" to "FirstName LastName"
+                  const [lastName, firstName] = name.split(', ').map(part => part.trim());
+                  return firstName && lastName ? `${firstName} ${lastName}` : name;
+              })
+      )
+  ];
+    console.log(batters, "batters inside unique batters");
+    console.log("Unique batters count:", batters.length);
+    return batters;
+} catch (error) {
+    console.error("Error fetching unique batters:", error);
+    throw error;
+}
 };
 
 // Get data for a specific batter

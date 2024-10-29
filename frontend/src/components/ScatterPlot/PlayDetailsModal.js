@@ -2,30 +2,33 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-const PlayDetailsModal = ({ show, onClose, data }) => (
-  <Modal show={show} onHide={onClose}>
+// src/components/ScatterPlot/PlayDetailsModal.js
+const PlayDetailsModal = ({ show, onHide, selectedData }) => (
+  <Modal show={show} onHide={onHide}>
     <Modal.Header closeButton>
       <Modal.Title>Play Details</Modal.Title>
     </Modal.Header>
     <Modal.Body>
-      {data && (
+      {selectedData ? ( // Check if selectedData exists
         <div>
-          <p><strong>Play Outcome:</strong> {data.playOutcome}</p>
-          <p><strong>Pitcher:</strong> {data.pitcher}</p>
-          <p><strong>Exit Speed:</strong> {data.x}</p>
-          <p><strong>Launch Angle:</strong> {data.y}</p>
-          <p><strong>Hit Distance:</strong> {data.hitDistance}</p>
+          <p><strong>Play Outcome:</strong> {selectedData.playOutcome}</p>
+          <p><strong>Pitcher:</strong> {selectedData.pitcher}</p>
+          <p><strong>Exit Speed:</strong> {selectedData.x}</p>
+          <p><strong>Launch Angle:</strong> {selectedData.y}</p>
+          <p><strong>Hit Distance:</strong> {selectedData.hitDistance}</p>
           <p>
             <strong>Video Link:</strong>{' '}
-            <a href={data.videoLink} target="_blank" rel="noopener noreferrer">
+            <a href={selectedData.videoLink} target="_blank" rel="noopener noreferrer">
               Watch Video
             </a>
           </p>
         </div>
+      ) : (
+        <p>No data available.</p> // Fallback message for empty data
       )}
     </Modal.Body>
     <Modal.Footer>
-      <Button variant="secondary" onClick={onClose}>
+      <Button variant="secondary" onClick={onHide}>
         Close
       </Button>
     </Modal.Footer>

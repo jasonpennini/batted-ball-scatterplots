@@ -9,12 +9,16 @@ import  scatterPlotOptions from './ScatterPlotOptions';
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend);
 
+// src/components/ScatterPlot/ScatterPlot.js
 const ScatterPlot = ({ batterData }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
   const scatterData = getScatterData(batterData);
-  const options = scatterPlotOptions(setShowModal, setSelectedData, scatterData);
+  const options = scatterPlotOptions((data) => {
+    setSelectedData(data); // Update selected data
+    setShowModal(true); // Show the modal
+  });
 
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start' }}>

@@ -1,76 +1,46 @@
 // src/pouchDBHelpers.js
-import db from './pouchDBConfig';
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 PouchDB.plugin(PouchDBFind);
 
 
-// Get all batted ball data
-export const getAllBattedBallData = async () => {
-    try {
-        const allData = await db.allDocs({ include_docs: true });
-        const documents = allData.rows.map(row => row.doc);
-        return documents
-    } catch (error) {
-        console.error("Error fetching all batted ball data:", error);
-        throw error;
-    }
-};
-
 // Get unique batters
-export const getUniqueBatters = async () => {
-  try {
-    let allDocs = [];
-    let skip = 0;
-    const batchSize = 500; // Adjust this value based on performance needs
+export const getUniqueBatters = (data) => {
+    console.log('data inside getUniqueBatters', data)
+    try {
+      // Get unique batters
+      const batters = [
+        ...new Set(
+            data
+                .map(doc => doc.BATTER)
+                .filter(Boolean)
+                .map(name => {
+                    // Format "LASTNAME, FIRSTNAME" to "FirstName LastName"
+                    const [lastName, firstName] = name.split(', ').map(part => part.trim());
+                    return firstName && lastName ? `${firstName} ${lastName}` : name;
+                })
+        )
+      ];
 
-    // Loop until no more results
-    while (true) {
-        const result = await db.find({ 
-            selector: {}, 
-            limit: batchSize, 
-            skip: skip 
-        });
-        
-        allDocs = allDocs.concat(result.docs);
-        if (result.docs.length < batchSize) break; // Exit if last batch is smaller than requested size
-        
-        skip += batchSize;
-    }
-
-    // Get unique batters
-    const batters = [
-      ...new Set(
-          allDocs
-              .map(doc => doc.BATTER)
-              .filter(Boolean)
-              .map(name => {
-                  // Format "LASTNAME, FIRSTNAME" to "FirstName LastName"
-                  const [lastName, firstName] = name.split(', ').map(part => part.trim());
-                  return firstName && lastName ? `${firstName} ${lastName}` : name;
-              })
-      )
-  ];
-    // Sort batters alphabetically
+   // Sort batters alphabetically
     batters.sort((a, b) => a.localeCompare(b));
     return batters;
-} catch (error) {
+  } catch (error) {
     console.error("Error fetching unique batters:", error);
     throw error;
-}
+  }
 };
 
 // Get data for a specific batter
-export const getBatterData = async (hitterName) => {
+export const getBatterData = (data, hitterName) => {
     try {
-        const result = await db.find({
-            selector: { BATTER: hitterName }
-        });
-
-        if (result.docs.length === 0) {
+        const result = data.filter(doc => doc.BATTER === hitterName);
+        
+        if (result.length === 0) {
             throw new Error('Hitter not found');
         }
-        return result.docs;
+        
+        return result;
     } catch (error) {
         console.error("Error fetching batter data:", error);
         throw error;

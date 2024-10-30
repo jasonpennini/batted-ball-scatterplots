@@ -1,10 +1,10 @@
 import PlayerSearch from "../components/PlayerSearch"
 
-const Home = () => {
+const Home = ({data}) => {
   return (
     <div className="home">
-      <PlayerSearch />
-    </div>
+      <PlayerSearch data={data} /> {/* Pass data to PlayerSearch */}
+      </div>
   )
 }
 

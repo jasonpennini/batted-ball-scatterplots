@@ -1,106 +1,82 @@
 import React, { useState, useEffect } from 'react';
-import { getBatterData, getUniqueBatters } from '../pouchDBHelpers';
+import { getBatterData } from '../pouchDBHelpers';
 import ScatterPlot from './ScatterPlot/Scatterplot';
 
-const PlayerSearch = () => {
-    const [batterName, setBatterName] = useState('');
+const PlayerSearch = ({ data }) => {
     const [batterData, setBatterData] = useState([]);
     const [error, setError] = useState('');
     const [value, setValue] = useState(''); // Search term input by user
-    const [batterNames, setBatterNames] = useState([]);
+    const [batterNames, setBatterNames] = useState([]); 
     const [filteredBatters, setFilteredBatters] = useState([]); 
     const [hoveredIndex, setHoveredIndex] = useState(null); 
 
-    useEffect(() => {
-        const fetchUniqueBatters = async () => {
-            try {
-                const batters = await getUniqueBatters(); 
-                setBatterNames(batters);
-                setFilteredBatters(batters); 
-            } catch (error) {
-                console.error("Error fetching unique batters:", error);
-                setError(error.message);
-            }
-        };
+   // Function to extract unique batter names
+const getUniqueBatters = (data) => {
+    const uniqueBattersSet = new Set();
+
+    data.forEach((item, index) => {
+        let batterName = item.BATTER.trim();
+        // Trim any trailing commas
+        if (batterName.endsWith(',')) {
+            batterName = batterName.slice(0, -1).trim(); // Remove the comma and trim spaces
+        }
         
-        fetchUniqueBatters();
-    }, []);
+        console.log(`Processing item ${index}:`, batterName); // Log each batter name being processed
+        
+        if (batterName) {
+            uniqueBattersSet.add(batterName); // Add to set if not empty
+        }
+    });
+
+    const uniqueBatters = [...uniqueBattersSet];
+    console.log("Unique batters found:", uniqueBatters); // Log unique batters
+    return uniqueBatters;
+};
+
+    useEffect(() => {
+        console.log("Data received:", data); // Log the incoming data
+        if (data && data.length > 0) {
+            const uniqueBatters = getUniqueBatters(data); // Use the new function to get unique batters
+            setBatterNames(uniqueBatters);
+            setFilteredBatters(uniqueBatters); // Initialize filtered batters
+        } else {
+            // Reset states if no data is provided
+            console.log("No data provided, resetting states."); // Log when no data is provided
+            setBatterNames([]);
+            setFilteredBatters([]);
+        }
+    }, [data]); // Dependency on data to update when it changes
 
     const onChange = (event) => {
         const input = event.target.value;
         setValue(input);
 
+        console.log("Search input:", input); // Log the search input
+
         // Filter batterNames based on the input
         const filtered = batterNames.filter((name) =>
             name.toLowerCase().startsWith(input.toLowerCase())
         );
+        console.log("Filtered batters:", filtered); // Log the filtered batters
         setFilteredBatters(filtered); 
     };
 
-    const handleInputChange = (event) => {
-        setBatterName(event.target.value);
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setError(''); 
-
-        try {
-
-            // Reformat the batter name from "First Last" to "Last, First"
-            const nameParts = batterName.split(' ');
-            const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : batterName;             
-            const data = await getBatterData(formattedName); 
-            setBatterData(data);
-        } catch (err) {
-            console.error("Error fetching batter data:", err);
-            setError(err.message); 
-        }
-    };
-
-    const onSearch = async () => {
-        // This function is now implemented to search through batterNames and fetch data
-        if (value.trim() === '') {
-            setError('Please enter a batter name to search.');
-            return;
-        }
-
-        const selectedBatter = filteredBatters.find((name) => 
-            name.toLowerCase().startsWith(value.toLowerCase())
-        );
-
-        if (selectedBatter) {
-            try {
-                // Reformat the batter name for getBatterData
-                const nameParts = selectedBatter.split(' ');
-                const formattedName = nameParts.length > 1 ? `${nameParts[1]}, ${nameParts[0]}` : selectedBatter;
-
-                const data = await getBatterData(formattedName); 
-                setBatterData(data);
-                setError(''); 
-            } catch (err) {
-                console.error("Error fetching batter data:", err);
-                setError(err.message); 
-            }
-        } else {
-            setError('Batter not found.');
-        }
-    };
-
     const handleBatterClick = async (batter) => {
-        // When a batter name is clicked, format the name and fetch data
         const nameParts = batter.split(' ');
         const formattedName = nameParts.length > 1 
             ? `${nameParts[1]}, ${nameParts[0]}`
             : batter;
 
+        console.log("Batter clicked:", formattedName); // Log the selected batter
+
         try {
             const data = await getBatterData(formattedName);
+            console.log("Fetched batter data:", data); // Log fetched batter data
             setBatterData(data);
             setError(''); 
             setValue(''); 
-            setFilteredBatters(batterNames); 
-            setFilteredBatters([]); 
+            // Remove this line as it resets to empty batter names after clicking
+            // setFilteredBatters(batterNames); 
         } catch (err) {
             console.error("Error fetching batter data:", err);
             setError(err.message); 
@@ -108,6 +84,7 @@ const PlayerSearch = () => {
     };
 
     const handleInputFocus = () => {
+        console.log("Input focused. Resetting filtered batters."); // Log when input is focused
         setFilteredBatters(batterNames); 
         setBatterData([]); 
     };
@@ -149,8 +126,7 @@ const PlayerSearch = () => {
             </div>
 
             <br />
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
-            
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}            
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}
         </div>
     );

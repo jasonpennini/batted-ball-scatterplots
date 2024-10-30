@@ -18,7 +18,7 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Select Player By First Name"
+          label="Find Player By First Name"
           value={value}
           onChange={(e) => onInputChange(e.target.value)}
           sx={{

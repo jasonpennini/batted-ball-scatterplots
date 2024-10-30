@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getBatterData } from '../pouchDBHelpers';
 import ScatterPlot from './ScatterPlot/Scatterplot';
 
 const PlayerSearch = ({ data }) => {
+    console.log('data at beginning of player search', data)
     const [batterData, setBatterData] = useState([]);
     const [error, setError] = useState('');
     const [value, setValue] = useState(''); // Search term input by user
@@ -19,10 +19,8 @@ const getUniqueBatters = (data) => {
         // Trim any trailing commas
         if (batterName.endsWith(',')) {
             batterName = batterName.slice(0, -1).trim(); // Remove the comma and trim spaces
-        }
-        
-        console.log(`Processing item ${index}:`, batterName); // Log each batter name being processed
-        
+            setBatterNames(batterName)
+        }        
         if (batterName) {
             uniqueBattersSet.add(batterName); // Add to set if not empty
         }
@@ -34,14 +32,12 @@ const getUniqueBatters = (data) => {
 };
 
     useEffect(() => {
-        console.log("Data received:", data); // Log the incoming data
         if (data && data.length > 0) {
             const uniqueBatters = getUniqueBatters(data); // Use the new function to get unique batters
             setBatterNames(uniqueBatters);
             setFilteredBatters(uniqueBatters); // Initialize filtered batters
         } else {
             // Reset states if no data is provided
-            console.log("No data provided, resetting states."); // Log when no data is provided
             setBatterNames([]);
             setFilteredBatters([]);
         }
@@ -61,25 +57,34 @@ const getUniqueBatters = (data) => {
         setFilteredBatters(filtered); 
     };
 
-    const handleBatterClick = async (batter) => {
-        const nameParts = batter.split(' ');
-        const formattedName = nameParts.length > 1 
-            ? `${nameParts[1]}, ${nameParts[0]}`
-            : batter;
-
-        console.log("Batter clicked:", formattedName); // Log the selected batter
-
+    const handleBatterClick = async (item) => {
+        console.log("Batter clicked:", item); // Log the clicked batter name
+        console.log(data, "data");
+    
+        // Format the name from the dropdown
+        const formattedName = item.trim(); // Assuming item is in "FirstName LastName" format
+    
         try {
-            const data = await getBatterData(formattedName);
-            console.log("Fetched batter data:", data); // Log fetched batter data
-            setBatterData(data);
-            setError(''); 
-            setValue(''); 
-            // Remove this line as it resets to empty batter names after clicking
-            // setFilteredBatters(batterNames); 
-        } catch (err) {
-            console.error("Error fetching batter data:", err);
-            setError(err.message); 
+            // Find all matching batter data using the BATTER property
+            const matchingBatterData = data.filter(batter => {
+                // Remove the comma and trim spaces
+                const batterName = batter.BATTER.replace(',', '').trim(); 
+                return batterName === formattedName;
+            });
+    
+            if (matchingBatterData.length > 0) {
+                console.log("Fetched batter data:", matchingBatterData); // Log fetched batter data
+                setBatterData(matchingBatterData); // Update the state with fetched data
+                setError(''); 
+                setValue(''); 
+            } else {
+                console.error("No data found for batter:", item);
+                setError(`No data found for ${item}`);
+                setBatterData([]); // Clear previous batter data if none found
+            }
+        } catch (error) {
+            console.error("Error fetching batter data:", error);
+            setError(error.message); 
         }
     };
 

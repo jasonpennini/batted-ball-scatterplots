@@ -12,6 +12,9 @@ export const colorMap = {
 };
 
 export const getScatterData = (batterData) => {
+
+  console.log("Batter Data Inside ScatterDataHelper:", batterData);
+
   const nameParts = batterData[0].BATTER.split(' ');
   const formattedName = nameParts.length > 1 ? `${nameParts[1].replace(/,/g, '').trim()} ${nameParts[0].replace(/,/g, '').trim()}`: batterData[0].BATTER.replace(/,/g, '').trim(); 
 

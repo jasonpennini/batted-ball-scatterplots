@@ -58,3 +58,25 @@ header a {
   cursor: pointer;      
 }
 
+.scatter-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.dropdown-container {
+  margin-right: 20px;
+}
+
+.scatter-plot {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+
+.color-legend {
+  margin-left: 20px;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+}

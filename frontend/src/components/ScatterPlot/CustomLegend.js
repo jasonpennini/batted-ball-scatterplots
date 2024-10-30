@@ -17,9 +17,10 @@ const CustomLegend = () => {
       {Object.entries(colorMap).map(([outcome, color]) => (
         <div key={outcome} style={{ display: 'flex', alignItems: 'center', margin: '0 10px' }}>
           <div style={{
-            width: '15px',
-            height: '15px',
+            width: '9px',
+            height: '9px',
             backgroundColor: color,
+            borderRadius: '50%', // Makes the dot circular
             marginRight: '5px',
           }}></div>
           <span style={{ fontWeight: 'bold' }}>{outcome}</span> {/* Make text bold */}

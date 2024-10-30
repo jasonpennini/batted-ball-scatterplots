@@ -9,7 +9,8 @@ PouchDB.plugin(PouchDBFind);
 export const getAllBattedBallData = async () => {
     try {
         const allData = await db.allDocs({ include_docs: true });
-        return allData.rows.map(row => row.doc);
+        const documents = allData.rows.map(row => row.doc);
+        return documents
     } catch (error) {
         console.error("Error fetching all batted ball data:", error);
         throw error;

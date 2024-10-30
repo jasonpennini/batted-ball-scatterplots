@@ -47,6 +47,14 @@ const PlayerSearch = ({ data }) => {
     };
 
     const handleBatterSelect = async (item) => {
+        if (!item) {
+            // If the item is empty or null, clear batter data and error
+            setBatterData([]);
+            setError('');
+            setValue('');
+            return; // Exit early
+        }
+
         const formattedName = item.trim(); 
         try {
             const matchingBatterData = data.filter(batter => {

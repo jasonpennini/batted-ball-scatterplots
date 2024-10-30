@@ -27,7 +27,7 @@ const PlayerSearch = ({ data }) => {
         });
 
         const uniqueBatters = [...uniqueBattersSet];
-        console.log("Unique batters found:", uniqueBatters); // Log unique batters
+        uniqueBatters.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
         return uniqueBatters;
     };
 

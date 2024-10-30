@@ -2,34 +2,34 @@ import React, { useState, useEffect } from 'react';
 import ScatterPlot from './ScatterPlot/Scatterplot';
 
 const PlayerSearch = ({ data }) => {
-    console.log('data at beginning of player search', data)
+    console.log('data at beginning of player search', data);
     const [batterData, setBatterData] = useState([]);
     const [error, setError] = useState('');
     const [value, setValue] = useState(''); // Search term input by user
-    const [batterNames, setBatterNames] = useState([]); 
-    const [filteredBatters, setFilteredBatters] = useState([]); 
-    const [hoveredIndex, setHoveredIndex] = useState(null); 
+    const [batterNames, setBatterNames] = useState([]);
+    const [filteredBatters, setFilteredBatters] = useState([]);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [showDropdown, setShowDropdown] = useState(true); // New state to control dropdown visibility
 
-   // Function to extract unique batter names
-const getUniqueBatters = (data) => {
-    const uniqueBattersSet = new Set();
+    // Function to extract unique batter names
+    const getUniqueBatters = (data) => {
+        const uniqueBattersSet = new Set();
 
-    data.forEach((item, index) => {
-        let batterName = item.BATTER.trim();
-        // Trim any trailing commas
-        if (batterName.endsWith(',')) {
-            batterName = batterName.slice(0, -1).trim(); // Remove the comma and trim spaces
-            setBatterNames(batterName)
-        }        
-        if (batterName) {
-            uniqueBattersSet.add(batterName); // Add to set if not empty
-        }
-    });
+        data.forEach((item) => {
+            let batterName = item.BATTER.trim();
+            // Trim any trailing commas
+            if (batterName.endsWith(',')) {
+                batterName = batterName.slice(0, -1).trim(); // Remove the comma and trim spaces
+            }        
+            if (batterName) {
+                uniqueBattersSet.add(batterName); // Add to set if not empty
+            }
+        });
 
-    const uniqueBatters = [...uniqueBattersSet];
-    console.log("Unique batters found:", uniqueBatters); // Log unique batters
-    return uniqueBatters;
-};
+        const uniqueBatters = [...uniqueBattersSet];
+        console.log("Unique batters found:", uniqueBatters); // Log unique batters
+        return uniqueBatters;
+    };
 
     useEffect(() => {
         if (data && data.length > 0) {
@@ -54,16 +54,16 @@ const getUniqueBatters = (data) => {
             name.toLowerCase().startsWith(input.toLowerCase())
         );
         console.log("Filtered batters:", filtered); // Log the filtered batters
-        setFilteredBatters(filtered); 
+        setFilteredBatters(filtered);
+        setShowDropdown(filtered.length > 0); // Show dropdown if there are filtered results
     };
 
     const handleBatterClick = async (item) => {
         console.log("Batter clicked:", item); // Log the clicked batter name
-        console.log(data, "data");
-    
+
         // Format the name from the dropdown
         const formattedName = item.trim(); // Assuming item is in "FirstName LastName" format
-    
+
         try {
             // Find all matching batter data using the BATTER property
             const matchingBatterData = data.filter(batter => {
@@ -71,12 +71,13 @@ const getUniqueBatters = (data) => {
                 const batterName = batter.BATTER.replace(',', '').trim(); 
                 return batterName === formattedName;
             });
-    
+
             if (matchingBatterData.length > 0) {
                 console.log("Fetched batter data:", matchingBatterData); // Log fetched batter data
                 setBatterData(matchingBatterData); // Update the state with fetched data
-                setError(''); 
-                setValue(''); 
+                setError('');
+                setValue('');
+                setShowDropdown(false); // Hide dropdown after selection
             } else {
                 console.error("No data found for batter:", item);
                 setError(`No data found for ${item}`);
@@ -84,22 +85,22 @@ const getUniqueBatters = (data) => {
             }
         } catch (error) {
             console.error("Error fetching batter data:", error);
-            setError(error.message); 
+            setError(error.message);
         }
     };
 
     const handleInputFocus = () => {
-        console.log("Input focused. Resetting filtered batters."); // Log when input is focused
-        setFilteredBatters(batterNames); 
-        setBatterData([]); 
+        console.log("Input focused. Showing dropdown."); // Log when input is focused
+        setFilteredBatters(batterNames);
+        setShowDropdown(true); // Show dropdown when input is focused
     };
 
     const handleMouseEnter = (index) => {
-        setHoveredIndex(index); 
+        setHoveredIndex(index);
     };
 
     const handleMouseLeave = () => {
-        setHoveredIndex(null); 
+        setHoveredIndex(null);
     };
 
     return (
@@ -109,29 +110,37 @@ const getUniqueBatters = (data) => {
 
             <div className="search-container">
                 <div className="search-inner">
-                    <input type="text" value={value} onChange={onChange} placeholder="Find a player" onFocus={handleInputFocus}/>
+                    <input
+                        type="text"
+                        value={value}
+                        onChange={onChange}
+                        placeholder="Find a player"
+                        onFocus={handleInputFocus}
+                    />
                 </div>
-                <div className="dropdown">
-                    {filteredBatters.map((item, index) => (
-                        <div
-                            key={index}
-                            className="dropdown-row"
-                            onClick={() => handleBatterClick(item)}
-                            onMouseEnter={() => handleMouseEnter(index)}
-                            onMouseLeave={handleMouseLeave}
-                            style={{
-                                backgroundColor: hoveredIndex === index ? '#e0e0e0' : 'transparent', 
-                                cursor: 'pointer' 
-                            }}
-                        >
-                            {item}
-                        </div>
-                    ))}
-                </div>
+                {showDropdown && ( // Render dropdown based on the state
+                    <div className="dropdown">
+                        {filteredBatters.map((item, index) => (
+                            <div
+                                key={index}
+                                className="dropdown-row"
+                                onClick={() => handleBatterClick(item)}
+                                onMouseEnter={() => handleMouseEnter(index)}
+                                onMouseLeave={handleMouseLeave}
+                                style={{
+                                    backgroundColor: hoveredIndex === index ? '#e0e0e0' : 'transparent', 
+                                    cursor: 'pointer' 
+                                }}
+                            >
+                                {item}
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             <br />
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}            
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}
         </div>
     );

@@ -23,7 +23,6 @@ header .container {
   justify-content: space-between;
 }
 header a {
-  color: #333;
   text-decoration: none;
 }
 .pages{
@@ -79,4 +78,21 @@ header a {
   border: 1px solid 00274D;
   padding: 10px;
   border-radius: 5px;
+}
+/* Apply dark blue color to all text on the page */
+body, 
+header, 
+.pages, 
+.nav-item,
+.dropdown-row, 
+.scatter-plot, 
+.color-legend {
+    color: #00274D !important; /* Set text color to dark blue */
+}
+
+/* Apply font to head and body */
+header, body {
+  font-family: 'Roboto', 'Arial', sans-serif; 
+  margin: 0; 
+  background: #f1f1f1; 
 }

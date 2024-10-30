@@ -77,7 +77,7 @@ const PlayerSearch = ({ data }) => {
 
     return (
         <div>
-            <h1>Search</h1>
+            <h2>Search</h2>
             <div className="search-container">
                 <Dropdown
                     items={filteredBatters}

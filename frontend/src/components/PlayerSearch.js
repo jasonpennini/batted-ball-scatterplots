@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'; 
 import ScatterPlot from './ScatterPlot/Scatterplot';
 import Dropdown from './Dropdown'; 
-import CustomLegend from './ScatterPlot/CustomLegend'
 
 const PlayerSearch = ({ data }) => {
     const [batterData, setBatterData] = useState([]);
@@ -99,7 +98,6 @@ const PlayerSearch = ({ data }) => {
             {batterData.length >0 && <h2>Exit Velo vs Launch Angle Scatterplot for {selectedBatter}</h2>}
             {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}
-            {batterData.length > 0 && <CustomLegend />}
 
         </div>
     );

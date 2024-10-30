@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'; 
 import ScatterPlot from './ScatterPlot/Scatterplot';
 import Dropdown from './Dropdown'; 
+import CustomLegend from './ScatterPlot/CustomLegend'
 
 const PlayerSearch = ({ data }) => {
     const [batterData, setBatterData] = useState([]);
@@ -9,6 +10,8 @@ const PlayerSearch = ({ data }) => {
     const [batterNames, setBatterNames] = useState([]);
     const [filteredBatters, setFilteredBatters] = useState([]);
     const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [selectedBatter, setSelectedBatter] = useState(''); // State for selected batter
+
 
     // Function to extract unique batter names
     const getUniqueBatters = (data) => {
@@ -52,6 +55,7 @@ const PlayerSearch = ({ data }) => {
             setBatterData([]);
             setError('');
             setValue('');
+            setSelectedBatter(''); // Clear selected batter
             return; // Exit early
         }
 
@@ -66,9 +70,11 @@ const PlayerSearch = ({ data }) => {
                 setBatterData(matchingBatterData); 
                 setError('');
                 setValue('');
+                setSelectedBatter(formattedName); // Set the selected batter's name
             } else {
                 setError(`No data found for ${item}`);
                 setBatterData([]);
+                setSelectedBatter(''); // Clear selected batter if no data found
             }
         } catch (error) {
             setError(error.message);
@@ -81,17 +87,20 @@ const PlayerSearch = ({ data }) => {
             <div className="search-container">
                 <Dropdown
                     items={filteredBatters}
-                    onChange={handleBatterSelect} // Updated to use the ComboBox change event
-                    value={value} // Pass the current input value
-                    onInputChange={onChange} // Handle input changes
+                    onChange={handleBatterSelect} 
+                    value={value} 
+                    onInputChange={onChange} 
                     hoveredIndex={hoveredIndex}
                     onMouseEnter={setHoveredIndex}
                     onMouseLeave={() => setHoveredIndex(null)}
                 />
             </div>
             <br />
+            {batterData.length >0 && <h2>Exit Velo vs Launch Angle Scatterplot for {selectedBatter}</h2>}
             {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}
+            {batterData.length > 0 && <CustomLegend />}
+
         </div>
     );
 };

@@ -1,4 +1,3 @@
-// src/components/ScatterPlot/scatterDataHelper.js
 export const colorMap = {
   Out: 'red',
   Error: 'black',
@@ -12,16 +11,16 @@ export const colorMap = {
 };
 
 export const getScatterData = (batterData) => {
-
   console.log("Batter Data Inside ScatterDataHelper:", batterData);
 
   const nameParts = batterData[0].BATTER.split(' ');
-  const formattedName = nameParts.length > 1 ? `${nameParts[1].replace(/,/g, '').trim()} ${nameParts[0].replace(/,/g, '').trim()}`: batterData[0].BATTER.replace(/,/g, '').trim(); 
+  const formattedName = nameParts.length > 1
+    ? `${nameParts[1].replace(/,/g, '').trim()} ${nameParts[0].replace(/,/g, '').trim()}`
+    : batterData[0].BATTER.replace(/,/g, '').trim();
 
-  return { // Return an object containing the datasets array
+  return {
     datasets: [
       {
-        label: `Exit Speed vs. Launch Angle for ${formattedName}`,
         data: batterData.map(player => ({
           x: player.EXIT_SPEED || 0,
           y: player.LAUNCH_ANGLE || 0,
@@ -32,6 +31,20 @@ export const getScatterData = (batterData) => {
         })),
         pointBackgroundColor: batterData.map(player => colorMap[player.PLAY_OUTCOME] || 'grey'),
         pointRadius: 5,
+        font: {
+          size: 20, // You can adjust the size as needed
+          weight: 'bold', // Set font weight to bold
+        },
+        // Enable tooltips
+        tooltip: {
+          callbacks: {
+            title: () => formattedName, // Use the formatted name as the title
+            label: (tooltipItem) => {
+              const { x, y } = tooltipItem.raw; // Get the raw data point
+              return [`Exit Speed: ${x} MPH`, `Launch Angle: ${y} Degrees`]; // Return the label with units
+            },
+          },
+        },
       },
     ],
   };

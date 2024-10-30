@@ -68,7 +68,7 @@ header a {
 }
 
 .scatter-plot {
-  border: 1px solid black;
+  border: 1px solid 00274D;
   padding: 10px;
   border-radius: 5px;
   flex-grow: 1;
@@ -76,7 +76,7 @@ header a {
 
 .color-legend {
   margin-left: 20px;
-  border: 1px solid black;
+  border: 1px solid 00274D;
   padding: 10px;
   border-radius: 5px;
 }

@@ -78,8 +78,6 @@ const PlayerSearch = ({ data }) => {
     return (
         <div>
             <h1>Search</h1>
-            <h6>Filter by first name</h6>
-
             <div className="search-container">
                 <Dropdown
                     items={filteredBatters}
@@ -91,7 +89,6 @@ const PlayerSearch = ({ data }) => {
                     onMouseLeave={() => setHoveredIndex(null)}
                 />
             </div>
-
             <br />
             {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}

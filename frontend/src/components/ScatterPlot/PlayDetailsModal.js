@@ -9,6 +9,19 @@ const PlayDetailsModal = ({ show, onHide, selectedData }) => {
     return `${firstName} ${lastName}`;
   };
 
+  // Function to format play outcome
+  const formatPlayOutcome = (outcome) => {
+    if (outcome === "Undefined") {
+      return "Foul or HBP"; 
+    }
+    
+    if (outcome === "HomeRun") {
+      return "Home Run"; 
+    }
+    
+    return outcome; 
+  };
+
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -17,7 +30,7 @@ const PlayDetailsModal = ({ show, onHide, selectedData }) => {
       <Modal.Body>
         {selectedData ? ( // Check if selectedData exists
           <>
-            <p><strong>Play Outcome:</strong> {selectedData.playOutcome}</p>
+            <p><strong>Play Outcome:</strong> {formatPlayOutcome(selectedData.playOutcome)}</p>
             <p><strong>Pitcher:</strong> {formatPitcherName(selectedData.pitcher)}</p>
             <p><strong>Exit Speed:</strong> {selectedData.x}</p>
             <p><strong>Launch Angle:</strong> {selectedData.y}</p>

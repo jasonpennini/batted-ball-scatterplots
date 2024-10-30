@@ -2,12 +2,12 @@ export const colorMap = {
   Out: 'red',
   Error: 'black',
   FieldersChoice: 'darkgrey',
-  'Out of Play': 'grey',
-  Sacrifice: '#ccffcc',
-  Single: 'lightgreen',
-  Double: 'green',
-  Triple: 'darkgreen',
-  HomeRun: 'darkgreen',
+  'Foul or HBP': 'grey',
+  Sacrifice: 'grey',
+  Single: '#ccffcc',
+  Double: 'lightgreen',
+  Triple: 'green',
+  HomeRun: '#003300',
 };
 
 export const getScatterData = (batterData) => {

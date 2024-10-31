@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Scatter } from 'react-chartjs-2';
-import { Chart, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
+import { Chart, LinearScale, PointElement, Tooltip } from 'chart.js';
 import PlayDetailsModal from './PlayDetailsModal';
 import { getScatterData } from './ScatterDataHelper';
 import  ScatterPlotOptions from './ScatterPlotOptions';
 import CustomLegend from './CustomLegend'
 
-
-Chart.register(LinearScale, PointElement, Tooltip, Legend);
+// LinearScale is used for x/y axises. PointElement allows us to render datapoints. Tooltip allows for modal logic on datapoints. 
+Chart.register(LinearScale, PointElement, Tooltip);
 
 const ScatterPlot = ({ batterData }) => {
 

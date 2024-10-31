@@ -23,37 +23,37 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
           onChange={(e) => onInputChange(e.target.value)}
           sx={{
             '& label': {
-              color: '#00274D !important', 
+              color: '#00274D !important',
             },
             '& .MuiInputLabel-shrink': {
-              color: '#00274D !important', 
+              color: '#00274D !important',
             },
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 borderColor: '#00274D !important',
               },
               '&:hover fieldset': {
-                borderColor: '#00274D !important', 
+                borderColor: '#00274D !important',
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#00274D !important', 
+                borderColor: '#00274D !important',
               },
             },
             '& .MuiInputBase-input': {
-              color: '#00274D !important', 
+              color: '#00274D !important',
             },
             '& .MuiInputBase-input::placeholder': {
-              color: '#00274D !important', 
-              opacity: 1, 
+              color: '#00274D !important',
+              opacity: 1,
             },
           }}
         />
       )}
       renderOption={(props, option) => {
-        const { key, ...otherProps } = props;
         return (
           <li
-            {...otherProps}
+            {...props}
+            key={option} // Use the option string as the key
             onMouseEnter={() => onMouseEnter(option)}
             onMouseLeave={onMouseLeave}
             style={{
@@ -66,8 +66,8 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
           >
             {option}
           </li>
-         );
-       }}
+        );
+      }}
       sx={{ width: 300 }}
     />
   );

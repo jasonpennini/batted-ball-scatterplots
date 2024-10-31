@@ -12,6 +12,7 @@ const PlayerSearch = ({ data }) => {
     const [selectedBatter, setSelectedBatter] = useState(''); 
 
     const getUniqueBatters = (data) => {
+        // creating a list of unique batters to be used in our dropdown component, data type will be a set of strings
         const uniqueBattersSet = new Set();
         data.forEach((item) => {
             let batterName = item.BATTER.trim();
@@ -22,6 +23,7 @@ const PlayerSearch = ({ data }) => {
                 uniqueBattersSet.add(batterName);
             }
         });
+        //setting filtered batters to an array of strings, which list all unique batter names
         const uniqueBatters = [...uniqueBattersSet].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
         return uniqueBatters;
     };
@@ -37,12 +39,14 @@ const PlayerSearch = ({ data }) => {
         }
     }, [data]); 
 
+    // on change handles the filtering logic so as a user types in a name in the Find Player By First Name 
     const onChange = (input) => {
         setValue(input);
 
         const filtered = batterNames.filter((name) =>
             name.toLowerCase().startsWith(input.toLowerCase())
         );
+        // search box we update state variable with their input instantly
         setFilteredBatters(filtered);
     };
 
@@ -58,20 +62,24 @@ const PlayerSearch = ({ data }) => {
 
         const formattedName = item.trim(); 
         try {
+            // attempts to match user selected batter from UI with a batter from the data
             const matchingBatterData = data.filter(batter => {
                 const batterName = batter.BATTER.replace(',', '').trim(); 
+                // will return a true or false depending on whether they are strictly equal
                 return batterName === formattedName;
             });
 
+            // if a matchingBatterData has a length > 0, updated batterData state variable with the matching data
             if (matchingBatterData.length > 0) {
                 setBatterData(matchingBatterData); 
                 setError('');
                 setValue('');
-                setSelectedBatter(formattedName); // Set the selected batter's name
+                // also update the selectedBatter, which will be passed as a prop and used in the children
+                setSelectedBatter(formattedName); 
             } else {
                 setError(`No data found for ${item}`);
                 setBatterData([]);
-                setSelectedBatter(''); // Clear selected batter if no data found
+                setSelectedBatter('');
             }
         } catch (error) {
             setError(error.message);
@@ -92,6 +100,7 @@ const PlayerSearch = ({ data }) => {
                 />
             </div>
             <br />
+            {/* if the batterData array has length, render the H2 and and the Scatterplot Component */}
             {batterData.length > 0 && <h2>Exit Velo vs Launch Angle Scatterplot for {selectedBatter}</h2>}
             {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}

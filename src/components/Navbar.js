@@ -3,6 +3,7 @@ import '../index.css';
 
 const Navbar = () => {
   return (
+    // added bootstrap for formatting
     <header className="bg-white py-3">
       <div className="container">
         <div className="row align-items-center">

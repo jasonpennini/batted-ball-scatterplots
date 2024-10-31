@@ -8,6 +8,7 @@ const PlayDetailsModal = ({ show, onHide, selectedData }) => {
     return `${firstName} ${lastName}`;
   };
 
+  // reformatting play outcomes so they look nicer on the scatterplot modal
   const formatPlayOutcome = (outcome) => {
     if (outcome === "Undefined") {
       return "Foul or HBP"; 
@@ -28,12 +29,14 @@ const PlayDetailsModal = ({ show, onHide, selectedData }) => {
       <Modal.Body>
         {selectedData ? ( 
           <>
+          {/* pulling data from the selectedData object to display on the modal */}
             <p><strong>Play Outcome:</strong> {formatPlayOutcome(selectedData.playOutcome)}</p>
             <p><strong>Pitcher:</strong> {formatPitcherName(selectedData.pitcher)}</p>
             <p><strong>Exit Speed:</strong> {selectedData.x}</p>
             <p><strong>Launch Angle:</strong> {selectedData.y}</p>
             <p><strong>Hit Distance:</strong> {selectedData.hitDistance}</p>
             <p>
+              {/* embedding video */}
               <strong>Full Screen Video: </strong> 
               {selectedData.videoLink ? (
                 <a href={selectedData.videoLink} target="_blank" rel="noopener noreferrer">Link</a>

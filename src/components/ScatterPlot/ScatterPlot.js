@@ -15,6 +15,7 @@ const ScatterPlot = ({ batterData }) => {
   const [selectedData, setSelectedData] = useState(null);
 
   const scatterData = getScatterData(batterData);
+  // when data passed to scatterplot options changes, update state for setSelcted data and setShowModal
   const options = ScatterPlotOptions((data) => {
     setSelectedData(data); 
     setShowModal(true); 

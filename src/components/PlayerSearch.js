@@ -3,13 +3,13 @@ import ScatterPlot from './ScatterPlot/ScatterPlot';
 import Dropdown from './Dropdown'; 
 
 const PlayerSearch = ({ data }) => {
-    const [batterData, setBatterData] = useState([]);
+    const [batterData, setBatterData] = useState([]); // stores current batter data
     const [error, setError] = useState('');
-    const [value, setValue] = useState(''); 
+    const [value, setValue] = useState(''); // stores current input from dropdown
     const [batterNames, setBatterNames] = useState([]);
-    const [filteredBatters, setFilteredBatters] = useState([]);
+    const [filteredBatters, setFilteredBatters] = useState([]); //holds list of all batters
     const [hoveredIndex, setHoveredIndex] = useState(null);
-    const [selectedBatter, setSelectedBatter] = useState(''); 
+    const [selectedBatter, setSelectedBatter] = useState(''); // holds name of selected batter from dropdown
 
     const getUniqueBatters = (data) => {
         // creating a list of unique batters to be used in our dropdown component, data type will be a set of strings

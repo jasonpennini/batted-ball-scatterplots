@@ -14,6 +14,7 @@ const CustomLegend = () => {
         justifyContent: 'space-between', 
       }}
     >
+      {/* returns an array of key value pairs which we can then map over as we assign divss with the */}
       {Object.entries(colorMap).map(([outcome, color]) => (
         <div key={outcome} style={{ display: 'flex', alignItems: 'center', margin: '0 10px' }}>
           <div style={{

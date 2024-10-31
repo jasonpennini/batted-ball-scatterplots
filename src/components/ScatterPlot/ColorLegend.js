@@ -12,6 +12,7 @@ const ColorLegend = ({ colorMap }) => {
           </tr>
         </thead>
         <tbody>
+          {/* converts colorMap to a series of key/value pairs in an array, so it can more easily be mapped over.  */}
           {Object.keys(colorMap).map((outcome, index) => (
             <tr key={index}>
               <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{outcome}</td>

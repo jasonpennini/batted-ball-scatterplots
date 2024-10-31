@@ -87,7 +87,7 @@ header,
 .dropdown-row, 
 .scatter-plot, 
 .color-legend {
-    color: #00274D !important; /* Set text color to dark blue */
+    color: #00274D !important; 
 }
 
 /* Apply font to head and body */

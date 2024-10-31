@@ -1,4 +1,3 @@
-// ScatterPlot.js
 import React, { useState } from 'react';
 import { Scatter } from 'react-chartjs-2';
 import { Chart, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';

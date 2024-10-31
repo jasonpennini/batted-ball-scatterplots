@@ -2,14 +2,12 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 const PlayDetailsModal = ({ show, onHide, selectedData }) => {
-  // Function to format pitcher name
   const formatPitcherName = (name) => {
-    if (!name) return 'N/A'; // Handle case when name is empty
+    if (!name) return 'N/A'; 
     const [lastName, firstName] = name.split(', ');
     return `${firstName} ${lastName}`;
   };
 
-  // Function to format play outcome
   const formatPlayOutcome = (outcome) => {
     if (outcome === "Undefined") {
       return "Foul or HBP"; 
@@ -28,7 +26,7 @@ const PlayDetailsModal = ({ show, onHide, selectedData }) => {
         <Modal.Title>Play Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {selectedData ? ( // Check if selectedData exists
+        {selectedData ? ( 
           <>
             <p><strong>Play Outcome:</strong> {formatPlayOutcome(selectedData.playOutcome)}</p>
             <p><strong>Pitcher:</strong> {formatPitcherName(selectedData.pitcher)}</p>
@@ -58,7 +56,7 @@ const PlayDetailsModal = ({ show, onHide, selectedData }) => {
             )}
           </>
         ) : (
-          <p>No data available.</p> // Fallback message for empty data
+          <p>No data available.</p> 
         )}
       </Modal.Body>
       <Modal.Footer>

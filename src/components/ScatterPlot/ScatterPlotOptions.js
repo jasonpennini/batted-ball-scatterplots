@@ -5,37 +5,37 @@ const scatterPlotOptions = (onClickHandler) => ({
       position: 'bottom',
       title: {
         display: true,
-        text: 'Exit Speed (MPH)', // Updated to include MPH
+        text: 'Exit Speed (MPH)', 
         color: '#00274D',
         font: {
           size: 14,
           family: 'Roboto, Arial, sans-serif',
-          weight: 'bold', // Set font weight to bold
+          weight: 'bold', 
         },
       },
       grid: {
-        color: '#00274D', // Set grid line color to very dark blue
+        color: '#00274D', 
       },
       ticks: {
-        color: '#00274D', // Set tick mark color to very dark blue
+        color: '#00274D',
       },
     },
     y: {
       title: {
         display: true,
-        text: 'Launch Angle (Degrees)', // Updated to include Degrees
-        color: '#00274D', // Set title color to very dark blue
+        text: 'Launch Angle (Degrees)',
+        color: '#00274D', 
         font: {
-          size: 14, // You can adjust the size as needed
-          family: 'Helvetica, Arial, sans-serif', // Customize font family
-          weight: 'bold', // Set font weight to bold
+          size: 14, 
+          family: 'Helvetica, Arial, sans-serif',
+          weight: 'bold', 
         },
       },
       grid: {
-        color: '#00274D', // Set grid line color to very dark blue
+        color: '#00274D', 
       },
       ticks: {
-        color: '#00274D', // Set tick mark color to very dark blue
+        color: '#00274D', 
       },
     },
   },
@@ -54,7 +54,7 @@ const scatterPlotOptions = (onClickHandler) => ({
   },
   plugins: {
     legend: {
-      display: false, // Set to false to remove the legend entirely
+      display: false, 
     },
   },
 });

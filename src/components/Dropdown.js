@@ -23,28 +23,28 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
           onChange={(e) => onInputChange(e.target.value)}
           sx={{
             '& label': {
-              color: '#00274D !important', // Set the label color to dark blue
+              color: '#00274D !important', 
             },
             '& .MuiInputLabel-shrink': {
-              color: '#00274D !important', // Ensure the minimized label color is also dark blue
+              color: '#00274D !important', 
             },
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
-                borderColor: '#00274D !important', // Set border color to dark blue
+                borderColor: '#00274D !important',
               },
               '&:hover fieldset': {
-                borderColor: '#00274D !important', // Set border color on hover
+                borderColor: '#00274D !important', 
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#00274D !important', // Set focused border color to dark blue
+                borderColor: '#00274D !important', 
               },
             },
             '& .MuiInputBase-input': {
-              color: '#00274D !important', // Set the input text color to dark blue
+              color: '#00274D !important', 
             },
             '& .MuiInputBase-input::placeholder': {
-              color: '#00274D !important', // Set placeholder color to dark blue
-              opacity: 1, // Ensure the placeholder is fully opaque
+              color: '#00274D !important', 
+              opacity: 1, 
             },
           }}
         />
@@ -56,10 +56,10 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
           onMouseLeave={onMouseLeave}
           style={{
             backgroundColor: hoveredIndex === option ? '#e0e0e0' : 'transparent',
-            color: '#00274D', // Ensure the text color of the options is dark blue
+            color: '#00274D', 
             cursor: 'pointer',
             padding: '8px 16px',
-            fontWeight: 'normal', // Adjust font weight if needed
+            fontWeight: 'normal', 
           }}
         >
           {option}

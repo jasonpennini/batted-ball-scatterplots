@@ -32,16 +32,15 @@ export const getScatterData = (batterData) => {
         pointBackgroundColor: batterData.map(player => colorMap[player.PLAY_OUTCOME] || 'grey'),
         pointRadius: 5,
         font: {
-          size: 20, // You can adjust the size as needed
-          weight: 'bold', // Set font weight to bold
+          size: 20,
+          weight: 'bold', 
         },
-        // Enable tooltips
         tooltip: {
           callbacks: {
-            title: () => formattedName, // Use the formatted name as the title
+            title: () => formattedName, 
             label: (tooltipItem) => {
-              const { x, y } = tooltipItem.raw; // Get the raw data point
-              return [`Exit Speed: ${x} MPH`, `Launch Angle: ${y} Degrees`]; // Return the label with units
+              const { x, y } = tooltipItem.raw; 
+              return [`Exit Speed: ${x} MPH`, `Launch Angle: ${y} Degrees`]; 
             },
           },
         },

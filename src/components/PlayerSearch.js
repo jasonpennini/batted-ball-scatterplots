@@ -80,7 +80,6 @@ const PlayerSearch = ({ data }) => {
 
     return (
         <div className="text-center">
-            <h2 className="h2-search">Search</h2>
             <div className="search-container d-flex justify-content-center">
                 <Dropdown
                     items={filteredBatters}

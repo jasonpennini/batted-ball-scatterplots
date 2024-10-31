@@ -20,7 +20,7 @@ header {
 header .container {
     max-width: 1600px;
     margin: 0 auto;
-    padding: 10px 20px;
+    padding: 5px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -78,7 +78,7 @@ header a {
 
 .scatter-plot {
     border: 1px solid #00274D; /* Added '#' for color code */
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
     flex-grow: 1;
 }
@@ -86,7 +86,7 @@ header a {
 .color-legend {
     margin-left: 20px;
     border: 1px solid #00274D; /* Added '#' for color code */
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
 }
 

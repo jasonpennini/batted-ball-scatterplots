@@ -94,5 +94,23 @@ header,
 header, body {
   font-family: 'Roboto', 'Arial', sans-serif; 
   margin: 0; 
-  background: #f1f1f1; 
+  width: 100%;
+}
+
+/* Navbar formatting */
+header .container {
+  align-items: center;
+  padding: 10px 20px;
+  background-color: lightgrey;
+}
+
+header h1 {
+  font-weight: 500;
+  color: #00274D;
+  align-items: center;
+}
+
+header .logo {
+  height: 40px;  
+  width: auto;
 }

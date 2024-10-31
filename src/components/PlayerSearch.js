@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'; 
-import ScatterPlot from './ScatterPlot/Scatterplot';
+import ScatterPlot from './ScatterPlot/ScatterPlot';
 import Dropdown from './Dropdown'; 
 
 const PlayerSearch = ({ data }) => {

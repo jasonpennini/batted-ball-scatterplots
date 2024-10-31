@@ -3,7 +3,7 @@ import { Scatter } from 'react-chartjs-2';
 import { Chart, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import PlayDetailsModal from './PlayDetailsModal';
 import { getScatterData } from './ScatterDataHelper';
-import  scatterPlotOptions from './ScatterPlotOptions';
+import  ScatterPlotOptions from './ScatterPlotOptions';
 import CustomLegend from './CustomLegend'
 
 
@@ -15,7 +15,7 @@ const ScatterPlot = ({ batterData }) => {
   const [selectedData, setSelectedData] = useState(null);
 
   const scatterData = getScatterData(batterData);
-  const options = scatterPlotOptions((data) => {
+  const options = ScatterPlotOptions((data) => {
     setSelectedData(data); 
     setShowModal(true); 
   });

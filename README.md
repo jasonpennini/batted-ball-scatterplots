@@ -8,3 +8,5 @@ Setup:
 [Installation Instructions](https://www.loom.com/share/011e0c2caaa94391be3f850b7da25146?sid=409fa3de-e66b-4b72-8c22-f84e55051862)
 
 [App Demo](https://www.loom.com/share/60dee8f95cce4d679a1dcdbdf204bd46)
+
+Heroku Deployment [here](https://batted-ball-scatterplots-a8c9a6f1ff50.herokuapp.com/)

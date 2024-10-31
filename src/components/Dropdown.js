@@ -8,10 +8,15 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
   };
 
   return (
+    // Autocomplete dynamically filters the last of players passed into it with the onChange handler
     <Autocomplete
+    // determines the dropdown list won't be rendered in a portal, which is preferred for simple layouts when you want consistency
       disablePortal
+      // options will be passed the items prop if it exists, which is an array containing all unique players
       options={items.length > 0 ? items : []}
+
       onChange={(event, newValue) => handleChange(newValue)}
+      // filter options filters the list for players whose name starts with the input values
       filterOptions={(options, { inputValue }) =>
         options.filter(option => option.toLowerCase().startsWith(inputValue.toLowerCase()))
       }
@@ -20,7 +25,9 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
           {...params}
           label="Find Player By First Name"
           value={value}
+          // as the user inputs text triggers onInputChange and in turn onChange
           onChange={(e) => onInputChange(e.target.value)}
+          // coloring for various parts of dropdown box
           sx={{
             '& label': {
               color: '#00274D !important',
@@ -50,10 +57,11 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
         />
       )}
       renderOption={(props, option) => {
+        // passes data to each list item on our dropdown and also sets some formatting 
         return (
           <li
             {...props}
-            key={option} // Use the option string as the key
+            key={option} 
             onMouseEnter={() => onMouseEnter(option)}
             onMouseLeave={onMouseLeave}
             style={{
@@ -64,6 +72,7 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
               fontWeight: 'normal',
             }}
           >
+            {/* renders option value as content of list item, option was based on user input from UI */}
             {option}
           </li>
         );

@@ -36,9 +36,9 @@ const PlayDetailsModal = ({ show, onHide, selectedData }) => {
             <p><strong>Launch Angle:</strong> {selectedData.y}</p>
             <p><strong>Hit Distance:</strong> {selectedData.hitDistance}</p>
             <p>
-              <strong>Full Size Video:</strong> 
+              <strong>Full Screen Video: </strong> 
               {selectedData.videoLink ? (
-                <a href={selectedData.videoLink} target="_blank" rel="noopener noreferrer"> Link </a>
+                <a href={selectedData.videoLink} target="_blank" rel="noopener noreferrer">Link</a>
               ) : (
                 ' N/A'
               )}

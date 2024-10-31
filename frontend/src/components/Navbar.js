@@ -3,7 +3,7 @@ const Navbar = () => {
   return (
     <header>
       <div className='container'>
-        <h1>Clickable Batted Ball Scatterplots</h1>
+        <h1> Batted Ball Scatterplots</h1>
       </div>
     </header>
 

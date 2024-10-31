@@ -49,6 +49,9 @@ const scatterPlotOptions = (onClickHandler) => ({
       onClickHandler(selectedData); 
     }
   },
+  onHover: (event, chartElement) => {
+    event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+  },
   plugins: {
     legend: {
       display: false, // Set to false to remove the legend entirely
@@ -57,4 +60,3 @@ const scatterPlotOptions = (onClickHandler) => ({
 });
 
 export default scatterPlotOptions;
-  

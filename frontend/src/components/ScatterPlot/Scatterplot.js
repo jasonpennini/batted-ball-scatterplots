@@ -10,19 +10,15 @@ import CustomLegend from './CustomLegend'
 
 Chart.register(LinearScale, PointElement, Tooltip, Legend);
 
-// src/components/ScatterPlot/ScatterPlot.js
 const ScatterPlot = ({ batterData }) => {
-
-      console.log("Batter Data Received:", batterData); // Log the data for debugging
-
 
   const [showModal, setShowModal] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
   const scatterData = getScatterData(batterData);
   const options = scatterPlotOptions((data) => {
-    setSelectedData(data); // Update selected data
-    setShowModal(true); // Show the modal
+    setSelectedData(data); 
+    setShowModal(true); 
   });
 
   return (

@@ -5,14 +5,12 @@ import Dropdown from './Dropdown';
 const PlayerSearch = ({ data }) => {
     const [batterData, setBatterData] = useState([]);
     const [error, setError] = useState('');
-    const [value, setValue] = useState(''); // Search term input by user
+    const [value, setValue] = useState(''); 
     const [batterNames, setBatterNames] = useState([]);
     const [filteredBatters, setFilteredBatters] = useState([]);
     const [hoveredIndex, setHoveredIndex] = useState(null);
-    const [selectedBatter, setSelectedBatter] = useState(''); // State for selected batter
+    const [selectedBatter, setSelectedBatter] = useState(''); 
 
-
-    // Function to extract unique batter names
     const getUniqueBatters = (data) => {
         const uniqueBattersSet = new Set();
         data.forEach((item) => {
@@ -81,9 +79,9 @@ const PlayerSearch = ({ data }) => {
     };
 
     return (
-        <div>
-            <h2>Search</h2>
-            <div className="search-container">
+        <div className="text-center">
+            <h2 className="h2-search">Search</h2>
+            <div className="search-container d-flex justify-content-center">
                 <Dropdown
                     items={filteredBatters}
                     onChange={handleBatterSelect} 
@@ -95,10 +93,9 @@ const PlayerSearch = ({ data }) => {
                 />
             </div>
             <br />
-            {batterData.length >0 && <h2>Exit Velo vs Launch Angle Scatterplot for {selectedBatter}</h2>}
+            {batterData.length > 0 && <h2>Exit Velo vs Launch Angle Scatterplot for {selectedBatter}</h2>}
             {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if any */}
             {batterData.length > 0 && <ScatterPlot batterData={batterData} />}
-
         </div>
     );
 };

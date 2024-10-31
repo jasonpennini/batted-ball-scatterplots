@@ -21,13 +21,14 @@ const ScatterPlot = ({ batterData }) => {
   });
 
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-      <div style={{ flexGrow: 1, border: '1px solid black', padding: '10px', borderRadius: '5px' }}>
-        <Scatter data={scatterData} options={options} />
-        <CustomLegend />
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', width: '100%', height: '500px' }}>
+      <div style={{ flexGrow: 1, maxWidth: '900px', border: '1px solid black', padding: '10px', borderRadius: '5px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Scatter data={scatterData} options={options} />
+          <CustomLegend />
+        </div>
       </div>
       <PlayDetailsModal show={showModal} onHide={() => setShowModal(false)} selectedData={selectedData} />
-
     </div>
   );
 };

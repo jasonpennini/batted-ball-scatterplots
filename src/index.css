@@ -1,84 +1,95 @@
-/* google font */
+/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
-/* layout */
+/* Layout */
 :root {
-  --primary: #1aac83;
-  --error: #e7195a;
+    --primary: #1aac83;
+    --error: #e7195a;
 }
+
 body {
-  background: #f1f1f1;
-  margin: 0;
-  font-family: "Poppins";
+    background: #f1f1f1;
+    margin: 0;
+    font-family: "Poppins";
 }
+
 header {
-  background: #fff;
+    background: #fff;
 }
+
 header .container {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
 header a {
-  text-decoration: none;
+    text-decoration: none;
 }
-.pages{
-  max-width: 1400px;
-  padding: 20px;
-  margin: 0 auto;
+
+.pages {
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center; 
 }
-/* homepage */
+
+/* Homepage */
 .home {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 100px;
+    display: grid;
+    gap: 100px;
 }
-/* navbar */
+
+/* Navbar */
 .navbar {
-  display: flex;
-  align-items: center;
-  min-width: 1100px;
+    display: flex;
+    align-items: center;
+    min-width: 1100px;
 }
+
 .navbar-nav {
-  display: flex; 
+    display: flex; 
 }
+
 .nav-item {
-  margin-left: 10px; 
+    margin-left: 10px; 
 }
+
 .dropdown {
-  max-width: 200px; 
-  overflow: hidden;  
+    max-width: 200px; 
+    overflow: hidden;  
+    min-height: 40px; 
 }
 
 .dropdown-row {
-  cursor: pointer;      
+    cursor: pointer;      
 }
 
 .scatter-container {
-  display: flex;
-  align-items: flex-start;
+    display: flex;
+    align-items: flex-start;
 }
 
 .dropdown-container {
-  margin-right: 20px;
+    margin-right: 20px;
 }
 
 .scatter-plot {
-  border: 1px solid 00274D;
-  padding: 10px;
-  border-radius: 5px;
-  flex-grow: 1;
+    border: 1px solid #00274D; /* Added '#' for color code */
+    padding: 10px;
+    border-radius: 5px;
+    flex-grow: 1;
 }
 
 .color-legend {
-  margin-left: 20px;
-  border: 1px solid 00274D;
-  padding: 10px;
-  border-radius: 5px;
+    margin-left: 20px;
+    border: 1px solid #00274D; /* Added '#' for color code */
+    padding: 10px;
+    border-radius: 5px;
 }
+
 /* Apply dark blue color to all text on the page */
 body, 
 header, 
@@ -91,26 +102,35 @@ header,
 }
 
 /* Apply font to head and body */
-header, body {
-  font-family: 'Roboto', 'Arial', sans-serif; 
-  margin: 0; 
-  width: 100%;
+header, 
+body {
+    font-family: 'Roboto', 'Arial', sans-serif; 
+    margin: 0; 
+    width: 100%;
 }
 
-/* Navbar formatting */
+/* Navbar Formatting */
 header .container {
-  align-items: center;
-  padding: 10px 20px;
-  background-color: lightgrey;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: lightgrey;
 }
 
 header h1 {
-  font-weight: 500;
-  color: #00274D;
-  align-items: center;
+    font-weight: 500;
+    color: #00274D;
+    align-items: center;
 }
 
 header .logo {
-  height: 40px;  
-  width: auto;
+    height: 40px;  
+    width: auto;
+}
+.h2-search {
+  margin-bottom: 20px;
+}
+.scatter-container {
+  display: flex;
+  justify-content: center; 
+  width: 100%; 
 }

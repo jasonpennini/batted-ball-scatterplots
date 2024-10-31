@@ -6,16 +6,11 @@ import Navbar from './components/Navbar';
 const App = () => {
   const [data, setData] = useState([]);
 
-  // Define the function to load and format data
   const loadInitialData = async () => {
     try {
-      const response = await fetch('/data/output.json'); // Fetch from the public folder
+      const response = await fetch('/data/output.json'); 
       const jsonData = await response.json();
 
-      // Log the entire data file, but limit output if it's large
-      console.log('Fetched data:', jsonData); // This will log the whole file; consider logging a sample if too large
-
-      // Format the data
       const formattedData = jsonData.map(item => {
         const batterName = item.BATTER ? item.BATTER.trim() : '';
         const nameParts = batterName.split(' ').filter(part => part);
@@ -27,16 +22,15 @@ const App = () => {
         };
       });
 
-      setData(formattedData); // Set the formatted data in state
+      setData(formattedData); 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
   useEffect(() => {
-    // Only fetch data if it's not already loaded
     if (data.length === 0) {
-      loadInitialData(); // Call the function to load data on component mount
+      loadInitialData(); 
     }
   }, [data]); // Dependency on data to avoid infinite loop
 

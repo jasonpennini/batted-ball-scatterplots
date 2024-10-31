@@ -49,22 +49,25 @@ const Dropdown = ({ items, onChange, value, onInputChange, hoveredIndex, onMouse
           }}
         />
       )}
-      renderOption={(props, option) => (
-        <li
-          {...props}
-          onMouseEnter={() => onMouseEnter(option)}
-          onMouseLeave={onMouseLeave}
-          style={{
-            backgroundColor: hoveredIndex === option ? '#e0e0e0' : 'transparent',
-            color: '#00274D', 
-            cursor: 'pointer',
-            padding: '8px 16px',
-            fontWeight: 'normal', 
-          }}
-        >
-          {option}
-        </li>
-      )}
+      renderOption={(props, option) => {
+        const { key, ...otherProps } = props;
+        return (
+          <li
+            {...otherProps}
+            onMouseEnter={() => onMouseEnter(option)}
+            onMouseLeave={onMouseLeave}
+            style={{
+              backgroundColor: hoveredIndex === option ? '#e0e0e0' : 'transparent',
+              color: '#00274D',
+              cursor: 'pointer',
+              padding: '8px 16px',
+              fontWeight: 'normal',
+            }}
+          >
+            {option}
+          </li>
+         );
+       }}
       sx={{ width: 300 }}
     />
   );

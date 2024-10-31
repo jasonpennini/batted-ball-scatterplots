@@ -50,5 +50,9 @@
   },
   "devDependencies": {
     "@types/pouchdb": "^6.4.2"
+  },
+  "engines": {
+    "node": "20.x",
+    "npm": "10.x"
   }
 }

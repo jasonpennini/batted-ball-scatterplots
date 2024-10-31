@@ -114,6 +114,7 @@ header .container {
     align-items: center;
     padding: 10px 20px;
     background-color: lightgrey;
+    margin-bottom: 10px;
 }
 
 header h1 {

@@ -1,4 +1,4 @@
-# Batted Ball Scatterplots !
+# Batted Ball Scatterplots
 
 Setup:
 
@@ -12,3 +12,4 @@ Video Demos:
 
 [App Demo](https://www.loom.com/share/60dee8f95cce4d679a1dcdbdf204bd46)
 
+You can also view the Heroku deployment [here](https://batted-ball-scatterplots-3dcdb0eee92c.herokuapp.com/)
